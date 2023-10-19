@@ -1,10 +1,36 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using KriptonApi.DTOs;
+using KriptonApi.Helpers;
 
 namespace KriptonApi.Entities
 {
     public class Usuario
     {
+        public Usuario(RegisterDto registerDto)
+        {
+            Nombre = registerDto.Nombre;
+            Apellido = registerDto.Apellido;
+            Dni = registerDto.Dni;
+            Email = registerDto.Email;
+            Clave = ClaveEncryptHelper.EncryptClave(registerDto.Clave, registerDto.Email);
+            Activo = true;
+        }
+        public Usuario(RegisterDto registerDto, int idUsuario)
+        {
+            IdUsuario = idUsuario;
+            Nombre = registerDto.Nombre;
+            Dni = registerDto.Dni;
+            Email = registerDto.Email;
+            Clave = ClaveEncryptHelper.EncryptClave(registerDto.Clave, registerDto.Email);
+            Activo = true;
+        }
+        public Usuario()
+        {
+
+        }
+
+
         [Key]
         [Column("IdUsuario", TypeName = "int")]
         public int IdUsuario { get; set; }
