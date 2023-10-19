@@ -68,7 +68,7 @@ namespace KriptonApi.Migrations
                             IdUsuario = 1,
                             Activo = true,
                             Apellido = "Cabrera",
-                            Clave = "12345",
+                            Clave = "665117e5124b9ff0cc0d4e8d408fdc2c8b9d026d070ccbdd84a0ce8da6285061",
                             Dni = 31467581,
                             Email = "martin@gmail.com",
                             Nombre = "Martin"
@@ -78,7 +78,7 @@ namespace KriptonApi.Migrations
                             IdUsuario = 2,
                             Activo = true,
                             Apellido = "Gonzalez",
-                            Clave = "12345",
+                            Clave = "23afa0ecff4c3793135f373179c52bcf6ea1ecb9f6a726b59a279f8c07918a09",
                             Dni = 37053098,
                             Email = "florencia@gmail.com",
                             Nombre = "Florencia"
@@ -88,7 +88,7 @@ namespace KriptonApi.Migrations
                             IdUsuario = 3,
                             Activo = true,
                             Apellido = "Cabrera",
-                            Clave = "12345",
+                            Clave = "90b2b66e3f82349f03f4f8e13083137be8297e1a7bc5e59ffb172003ba717b41",
                             Dni = 58706438,
                             Email = "salome@gmail.com",
                             Nombre = "Salome"
