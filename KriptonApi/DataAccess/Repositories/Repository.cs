@@ -11,6 +11,7 @@ namespace KriptonApi.DataAccess.Repositories
         {
             _context = context;
         }
+
         public virtual async Task<List<T>> GetAll()
         {
             return await _context.Set<T>().ToListAsync();
@@ -19,6 +20,19 @@ namespace KriptonApi.DataAccess.Repositories
         {
             return await _context.Set<T>().FindAsync(id);
         }
-    }
 
+        public virtual async Task<bool> Insert(T entity)
+        {
+            await _context.Set<T>().AddAsync(entity);
+            return true;
+        }
+        public virtual Task<bool> Update(T Entity)
+        {
+            throw new NotImplementedException();
+        }
+        public virtual Task<bool> Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

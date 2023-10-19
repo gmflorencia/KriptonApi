@@ -1,4 +1,5 @@
 ﻿using KriptonApi.Entities;
+using KriptonApi.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace KriptonApi.DataAccess.DataBaseSeeding
@@ -15,7 +16,7 @@ namespace KriptonApi.DataAccess.DataBaseSeeding
                     Apellido = "Cabrera",
                     Dni = 31467581,
                     Email = "martin@gmail.com",
-                    Clave = "12345",
+                    Clave = ClaveEncryptHelper.EncryptClave("1234", "martin@gmail.com"),
                     Activo = true
 
                 },
@@ -26,7 +27,7 @@ namespace KriptonApi.DataAccess.DataBaseSeeding
                     Apellido= "Gonzalez",
                     Dni = 37053098,
                     Email = "florencia@gmail.com",
-                    Clave = "12345",
+                    Clave = ClaveEncryptHelper.EncryptClave("1234", "florencia@gmail.com"),
                     Activo = true
                 },
                 new Usuario
@@ -36,7 +37,7 @@ namespace KriptonApi.DataAccess.DataBaseSeeding
                     Apellido = "Cabrera",
                     Dni = 58706438,
                     Email = "salome@gmail.com",
-                    Clave = "12345",
+                    Clave = ClaveEncryptHelper.EncryptClave("1234", "salome@gmail.com"),
                     Activo = true
 
                 });
