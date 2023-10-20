@@ -13,6 +13,13 @@ namespace KriptonApi.DataAccess
         {
         }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Cuenta> Cuentas { get; set; }
+        public DbSet<TipoCuenta> TipoCuentas { get; set; }
+        public DbSet<Transaccion> Transacciones { get; set; }
+        public DbSet<TipoTransaccion> TipoTransaccions { get; set; }
+        public DbSet<Conversion> Conversions { get; set; }
+        public DbSet<TipoConversion> TipoConversions { get; set; }
+        public DbSet<Criptomoneda> Criptomonedas { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
