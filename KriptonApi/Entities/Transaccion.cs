@@ -8,15 +8,15 @@ namespace KriptonApi.Entities
         [Key]
         [Column ("IdTransacciones", TypeName = "int") ]
         public int IdTransacciones { get; set; }
-        [Required]
-        [ForeignKey("Cuentas")]
-        public int IdCuentaOrigen { get; set; }
-        [Required]
-        [ForeignKey("Cuentas")]
-        public int IdCuentaDestino { get; set; }
-        [Required]
-        [ForeignKey("TipoTransaccion")]
-        public int IdTipoTransaccion { get; set; }
+        
+        [ForeignKey("IdCuenta")]
+        public Cuenta IdcuentaOrigen { get; set; }
+        
+        [ForeignKey("IdCuenta")]
+        public Cuenta IdcuentaDestino { get; set; }
+        
+        [ForeignKey("IdTipoTransaccion")]
+        public TipoTransaccion tipoTransaccion { get; set; }
         [Required]
         [Column("Monto", TypeName = "decimal")]
         public double Monto { get; set; }

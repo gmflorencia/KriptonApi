@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
 namespace KriptonApi.Entities
@@ -9,9 +8,9 @@ namespace KriptonApi.Entities
         [Key]
         [Column("IdCuenta", TypeName = "int")]
         public int IdCuenta { get; set; }
-        [Required]
-        [ForeignKey("TipoCuenta")]
-        public int IdTipoCuenta { get; set; }
+        
+        [ForeignKey("IdTipoCuenta")]
+        public TipoCuenta tipoCuenta { get; set; }
         [Required]
         [Column("Saldo", TypeName = "decimal")]
         public double Saldo { get; set; }
