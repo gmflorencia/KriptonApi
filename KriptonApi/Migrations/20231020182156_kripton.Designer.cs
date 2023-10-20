@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KriptonApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231020011505_kripton")]
+    [Migration("20231020182156_kripton")]
     partial class kripton
     {
         /// <inheritdoc />
@@ -39,13 +39,16 @@ namespace KriptonApi.Migrations
                         .HasColumnName("FechaConversion");
 
                     b.Property<int>("IdCuentaDestino")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("IdCuentaDestino");
 
                     b.Property<int>("IdCuentaOrigen")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("IdCuentaOrigen");
 
                     b.Property<int>("IdTipoConversion")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("IdTipoConversion");
 
                     b.Property<decimal>("MontoConvertido")
                         .HasColumnType("decimal")
@@ -53,7 +56,13 @@ namespace KriptonApi.Migrations
 
                     b.HasKey("IdConversion");
 
-                    b.ToTable("Conversions");
+                    b.HasIndex("IdCuentaDestino");
+
+                    b.HasIndex("IdCuentaOrigen");
+
+                    b.HasIndex("IdTipoConversion");
+
+                    b.ToTable("Conversion");
                 });
 
             modelBuilder.Entity("KriptonApi.Entities.Criptomoneda", b =>
@@ -76,7 +85,7 @@ namespace KriptonApi.Migrations
 
                     b.HasKey("IdCripto");
 
-                    b.ToTable("Criptomonedas");
+                    b.ToTable("Criptomoneda");
                 });
 
             modelBuilder.Entity("KriptonApi.Entities.Cuenta", b =>
@@ -103,7 +112,8 @@ namespace KriptonApi.Migrations
                         .HasColumnName("Cbu");
 
                     b.Property<int>("IdTipoCuenta")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("IdTipoCuenta");
 
                     b.Property<int>("NumeroCuenta")
                         .HasColumnType("int")
@@ -120,7 +130,9 @@ namespace KriptonApi.Migrations
 
                     b.HasKey("IdCuenta");
 
-                    b.ToTable("Cuentas");
+                    b.HasIndex("IdTipoCuenta");
+
+                    b.ToTable("Cuenta");
                 });
 
             modelBuilder.Entity("KriptonApi.Entities.TipoConversion", b =>
@@ -139,7 +151,7 @@ namespace KriptonApi.Migrations
 
                     b.HasKey("IdTipoConversion");
 
-                    b.ToTable("TipoConversions");
+                    b.ToTable("TipoConversion");
                 });
 
             modelBuilder.Entity("KriptonApi.Entities.TipoCuenta", b =>
@@ -158,7 +170,7 @@ namespace KriptonApi.Migrations
 
                     b.HasKey("IdTipoCuenta");
 
-                    b.ToTable("TipoCuentas");
+                    b.ToTable("TipoCuenta");
                 });
 
             modelBuilder.Entity("KriptonApi.Entities.TipoTransaccion", b =>
@@ -177,7 +189,7 @@ namespace KriptonApi.Migrations
 
                     b.HasKey("IdTipoTransaccion");
 
-                    b.ToTable("TipoTransaccions");
+                    b.ToTable("TipoTransaccion");
                 });
 
             modelBuilder.Entity("KriptonApi.Entities.Transaccion", b =>
@@ -194,13 +206,16 @@ namespace KriptonApi.Migrations
                         .HasColumnName("FechaTransaccion");
 
                     b.Property<int>("IdCuentaDestino")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("IdCuentaDestino");
 
                     b.Property<int>("IdCuentaOrigen")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("IdCuentaOrigen");
 
                     b.Property<int>("IdTipoTransaccion")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("IdTipoTransaccion");
 
                     b.Property<decimal>("Monto")
                         .HasColumnType("decimal")
@@ -208,7 +223,13 @@ namespace KriptonApi.Migrations
 
                     b.HasKey("IdTransacciones");
 
-                    b.ToTable("Transacciones");
+                    b.HasIndex("IdCuentaDestino");
+
+                    b.HasIndex("IdCuentaOrigen");
+
+                    b.HasIndex("IdTipoTransaccion");
+
+                    b.ToTable("Transaccion");
                 });
 
             modelBuilder.Entity("KriptonApi.Entities.Usuario", b =>
@@ -232,7 +253,7 @@ namespace KriptonApi.Migrations
                     b.Property<string>("Clave")
                         .IsRequired()
                         .HasColumnType("VARCHAR (100)")
-                        .HasColumnName("CLave");
+                        .HasColumnName("Clave");
 
                     b.Property<int>("Dni")
                         .HasColumnType("int")
@@ -250,7 +271,7 @@ namespace KriptonApi.Migrations
 
                     b.HasKey("IdUsuario");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("Usuario");
 
                     b.HasData(
                         new
@@ -283,6 +304,71 @@ namespace KriptonApi.Migrations
                             Email = "salome@gmail.com",
                             Nombre = "Salome"
                         });
+                });
+
+            modelBuilder.Entity("KriptonApi.Entities.Conversion", b =>
+                {
+                    b.HasOne("KriptonApi.Entities.Cuenta", "CuentaDestino")
+                        .WithMany()
+                        .HasForeignKey("IdCuentaDestino")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KriptonApi.Entities.Cuenta", "CuentaOrigen")
+                        .WithMany()
+                        .HasForeignKey("IdCuentaOrigen")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KriptonApi.Entities.TipoConversion", "TipoConversion")
+                        .WithMany()
+                        .HasForeignKey("IdTipoConversion")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CuentaDestino");
+
+                    b.Navigation("CuentaOrigen");
+
+                    b.Navigation("TipoConversion");
+                });
+
+            modelBuilder.Entity("KriptonApi.Entities.Cuenta", b =>
+                {
+                    b.HasOne("KriptonApi.Entities.TipoCuenta", "TipoCuenta")
+                        .WithMany()
+                        .HasForeignKey("IdTipoCuenta")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TipoCuenta");
+                });
+
+            modelBuilder.Entity("KriptonApi.Entities.Transaccion", b =>
+                {
+                    b.HasOne("KriptonApi.Entities.Cuenta", "CuentaDestino")
+                        .WithMany()
+                        .HasForeignKey("IdCuentaDestino")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KriptonApi.Entities.Cuenta", "CuentaOrigen")
+                        .WithMany()
+                        .HasForeignKey("IdCuentaOrigen")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KriptonApi.Entities.TipoTransaccion", "TipoTransaccion")
+                        .WithMany()
+                        .HasForeignKey("IdTipoTransaccion")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CuentaDestino");
+
+                    b.Navigation("CuentaOrigen");
+
+                    b.Navigation("TipoTransaccion");
                 });
 #pragma warning restore 612, 618
         }
