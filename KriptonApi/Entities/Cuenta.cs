@@ -8,9 +8,13 @@ namespace KriptonApi.Entities
         [Key]
         [Column("IdCuenta", TypeName = "int")]
         public int IdCuenta { get; set; }
-        
+
+        [Required]
+        [Column("IdTipoCuenta", TypeName = "int")]
+        public int IdTipoCuenta { get; set; }
         [ForeignKey("IdTipoCuenta")]
-        public TipoCuenta tipoCuenta { get; set; }
+        public TipoCuenta TipoCuenta { get; set; }
+
         [Required]
         [Column("Saldo", TypeName = "decimal")]
         public double Saldo { get; set; }

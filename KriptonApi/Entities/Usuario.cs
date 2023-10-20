@@ -47,7 +47,7 @@ namespace KriptonApi.Entities
         [Column("Email", TypeName = "VARCHAR (100)")]
         public string Email { get; set; }
         [Required]
-        [Column("CLave", TypeName = "VARCHAR (100)")]
+        [Column("Clave", TypeName = "VARCHAR (100)")]
         public string Clave { get; set; }
         [Required]
         [Column("Activo", TypeName = "bit")]
