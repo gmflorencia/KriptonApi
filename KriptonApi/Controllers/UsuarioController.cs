@@ -10,10 +10,10 @@ namespace KriptonApi.Controllers
     [Route("api/Usuario")]
     [ApiController]
     [Authorize]
-    public class UsuarioControllers : ControllerBase
+    public class UsuarioController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        public UsuarioControllers(IUnitOfWork unitOfWork)
+        public UsuarioController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
