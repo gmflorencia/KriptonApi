@@ -7,7 +7,7 @@ namespace KriptonApi.DataAccess.DataBaseSeeding
     {
         public void SeedDataBase(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TipoTransaccionSeeder>().HasData(
+            modelBuilder.Entity<TipoTransaccion>().HasData(
                 new TipoTransaccion
                 {
                     IdTipoTransaccion= 1,

@@ -7,7 +7,7 @@ namespace KriptonApi.DataAccess.DataBaseSeeding
     {
         public void SeedDataBase(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CriptomonedaSeeder>().HasData(
+            modelBuilder.Entity<Criptomoneda>().HasData(
                 new Criptomoneda
                 {
                     IdCripto = 1,

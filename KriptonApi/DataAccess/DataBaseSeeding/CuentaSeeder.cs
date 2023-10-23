@@ -8,11 +8,12 @@ namespace KriptonApi.DataAccess.DataBaseSeeding
     {
         public void SeedDataBase(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CuentaSeeder>().HasData(
+            modelBuilder.Entity<Cuenta>().HasData(
                 new Cuenta
                 {
                     IdCuenta = 1,
                     IdTipoCuenta = 1,
+                    IdUsuario = 1,
                     Saldo = 50000,
                     Cbu = "01702046600000087865",
                     Alias = "Patria.gorro.Caucho",
@@ -26,6 +27,7 @@ namespace KriptonApi.DataAccess.DataBaseSeeding
                 {
                     IdCuenta = 2,
                     IdTipoCuenta = 2,
+                    IdUsuario = 2,
                     Saldo = 80000,
                     Cbu = "0290000100000000058382",
                     Alias = "Raiz.Arbol.Planta",
@@ -37,6 +39,7 @@ namespace KriptonApi.DataAccess.DataBaseSeeding
                 {
                     IdCuenta = 3,
                     IdTipoCuenta = 3,
+                    IdUsuario= 3,
                     Saldo = 90000,
                     Cbu = "0110599520000001235579",
                     Alias = "Alfil.Oslo.Rima",
