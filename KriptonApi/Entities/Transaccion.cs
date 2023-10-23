@@ -1,13 +1,28 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using KriptonApi.DTOs;
 
 namespace KriptonApi.Entities
 {
     public class Transaccion
     {
+        public Transaccion(TransaccionDto transferenciaDto)
+        {
+            IdCuentaOrigen = transferenciaDto.IdCuentaOrigen;
+            IdCuentaDestino = transferenciaDto.IdCuentaDestino;
+            IdTipoTransaccion = transferenciaDto.IdTipoTransaccion;
+            Monto = transferenciaDto.Monto;
+            FechaTransaccion = transferenciaDto.FechaTransferencia;
+        }
+        public Transaccion()
+        {
+
+        }
+
         [Key]
-        [Column("IdTransacciones", TypeName = "int")]
-        public int IdTransacciones { get; set; }
+        [Column("IdTransaccion", TypeName = "int")]
+        public int IdTransaccion { get; set; }
 
         [Required]
         [Column("IdCuentaOrigen", TypeName = "int")]
