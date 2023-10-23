@@ -1,7 +1,11 @@
 using KriptonApi.DataAccess;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using KriptonApi.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +43,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer("name=DefaultConnection");
 });
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                      .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters()
+                      {
+                          ValidateIssuerSigningKey = true,
+                          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+                          ValidateIssuer = false,
+                          ValidateAudience = false
+                      }); ;
+
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWorkServices>();
 
@@ -53,6 +66,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
