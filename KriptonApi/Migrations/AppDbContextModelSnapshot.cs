@@ -22,44 +22,54 @@ namespace KriptonApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("KriptonApi.Entities.Conversion", b =>
+            modelBuilder.Entity("KriptonApi.Entities.Cotizacion", b =>
                 {
-                    b.Property<int>("IdConversion")
+                    b.Property<int>("IdCotizacion")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("IdConversion");
+                        .HasColumnName("IdCotizacion");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdConversion"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCotizacion"));
 
-                    b.Property<DateTime>("FechaConversion")
-                        .HasColumnType("Date")
-                        .HasColumnName("FechaConversion");
+                    b.Property<bool>("Activo")
+                        .HasColumnType("bit")
+                        .HasColumnName("Activo");
 
-                    b.Property<int>("IdCuentaDestino")
+                    b.Property<decimal>("Compra")
+                        .HasColumnType("money")
+                        .HasColumnName("Compra");
+
+                    b.Property<int>("IdMoneda")
                         .HasColumnType("int")
-                        .HasColumnName("IdCuentaDestino");
+                        .HasColumnName("IdMoneda");
 
-                    b.Property<int>("IdCuentaOrigen")
-                        .HasColumnType("int")
-                        .HasColumnName("IdCuentaOrigen");
+                    b.Property<decimal>("Venta")
+                        .HasColumnType("money")
+                        .HasColumnName("Venta");
 
-                    b.Property<int>("IdTipoConversion")
-                        .HasColumnType("int")
-                        .HasColumnName("IdTipoConversion");
+                    b.HasKey("IdCotizacion");
 
-                    b.Property<decimal>("MontoConvertido")
-                        .HasColumnType("decimal")
-                        .HasColumnName("MontoConvertido");
+                    b.HasIndex("IdMoneda");
 
-                    b.HasKey("IdConversion");
+                    b.ToTable("Cotizacion");
 
-                    b.HasIndex("IdCuentaDestino");
-
-                    b.HasIndex("IdCuentaOrigen");
-
-                    b.HasIndex("IdTipoConversion");
-
-                    b.ToTable("Conversion");
+                    b.HasData(
+                        new
+                        {
+                            IdCotizacion = 1,
+                            Activo = true,
+                            Compra = 347.50m,
+                            IdMoneda = 1,
+                            Venta = 365.5m
+                        },
+                        new
+                        {
+                            IdCotizacion = 2,
+                            Activo = true,
+                            Compra = 369.89m,
+                            IdMoneda = 2,
+                            Venta = 370.47m
+                        });
                 });
 
             modelBuilder.Entity("KriptonApi.Entities.Criptomoneda", b =>
@@ -83,6 +93,26 @@ namespace KriptonApi.Migrations
                     b.HasKey("IdCripto");
 
                     b.ToTable("Criptomoneda");
+
+                    b.HasData(
+                        new
+                        {
+                            IdCripto = 1,
+                            Nombre = "BTC",
+                            TasaConversion = 0.25m
+                        },
+                        new
+                        {
+                            IdCripto = 2,
+                            Nombre = "ETH",
+                            TasaConversion = 0.35m
+                        },
+                        new
+                        {
+                            IdCripto = 3,
+                            Nombre = "LTC",
+                            TasaConversion = 0.3m
+                        });
                 });
 
             modelBuilder.Entity("KriptonApi.Entities.Cuenta", b =>
@@ -112,6 +142,10 @@ namespace KriptonApi.Migrations
                         .HasColumnType("int")
                         .HasColumnName("IdTipoCuenta");
 
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("int")
+                        .HasColumnName("IdUsuario");
+
                     b.Property<int>("NumeroCuenta")
                         .HasColumnType("int")
                         .HasColumnName("NumeroCuenta");
@@ -129,26 +163,91 @@ namespace KriptonApi.Migrations
 
                     b.HasIndex("IdTipoCuenta");
 
+                    b.HasIndex("IdUsuario");
+
                     b.ToTable("Cuenta");
+
+                    b.HasData(
+                        new
+                        {
+                            IdCuenta = 1,
+                            Activo = true,
+                            Alias = "Patria.gorro.Caucho",
+                            Cbu = "01702046600000087865",
+                            IdTipoCuenta = 1,
+                            IdUsuario = 1,
+                            NumeroCuenta = 204878658,
+                            Saldo = 50000m,
+                            UUID = "12345678123456781234567812345678"
+                        },
+                        new
+                        {
+                            IdCuenta = 2,
+                            Activo = true,
+                            Alias = "Raiz.Arbol.Planta",
+                            Cbu = "0290000100000000058382",
+                            IdTipoCuenta = 2,
+                            IdUsuario = 2,
+                            NumeroCuenta = 5838,
+                            Saldo = 80000m,
+                            UUID = "123456781234-56781234567812345678"
+                        },
+                        new
+                        {
+                            IdCuenta = 3,
+                            Activo = true,
+                            Alias = "Alfil.Oslo.Rima",
+                            Cbu = "0110599520000001235579",
+                            IdTipoCuenta = 3,
+                            IdUsuario = 3,
+                            NumeroCuenta = 123557,
+                            Saldo = 90000m,
+                            UUID = "123456781234-56781234567812785643"
+                        });
                 });
 
-            modelBuilder.Entity("KriptonApi.Entities.TipoConversion", b =>
+            modelBuilder.Entity("KriptonApi.Entities.Moneda", b =>
                 {
-                    b.Property<int>("IdTipoConversion")
+                    b.Property<int>("IdMoneda")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("IdTipoConversion");
+                        .HasColumnType("INT")
+                        .HasColumnName("IdMoneda");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTipoConversion"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdMoneda"));
 
-                    b.Property<string>("Descr")
+                    b.Property<bool>("Activo")
+                        .HasColumnType("BIT")
+                        .HasColumnName("Activo");
+
+                    b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("VARCHAR (100)")
-                        .HasColumnName("Descr");
+                        .HasColumnType("VARCHAR(20)")
+                        .HasColumnName("Descripcion");
 
-                    b.HasKey("IdTipoConversion");
+                    b.Property<string>("Simbolo")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(5)")
+                        .HasColumnName("Simbolo");
 
-                    b.ToTable("TipoConversion");
+                    b.HasKey("IdMoneda");
+
+                    b.ToTable("Moneda");
+
+                    b.HasData(
+                        new
+                        {
+                            IdMoneda = 1,
+                            Activo = true,
+                            Descripcion = "Dólar",
+                            Simbolo = "u$s"
+                        },
+                        new
+                        {
+                            IdMoneda = 2,
+                            Activo = true,
+                            Descripcion = "Euro",
+                            Simbolo = "€"
+                        });
                 });
 
             modelBuilder.Entity("KriptonApi.Entities.TipoCuenta", b =>
@@ -168,6 +267,23 @@ namespace KriptonApi.Migrations
                     b.HasKey("IdTipoCuenta");
 
                     b.ToTable("TipoCuenta");
+
+                    b.HasData(
+                        new
+                        {
+                            IdTipoCuenta = 1,
+                            Descr = "pesos"
+                        },
+                        new
+                        {
+                            IdTipoCuenta = 2,
+                            Descr = "dolares"
+                        },
+                        new
+                        {
+                            IdTipoCuenta = 3,
+                            Descr = "Criptomoneda"
+                        });
                 });
 
             modelBuilder.Entity("KriptonApi.Entities.TipoTransaccion", b =>
@@ -187,16 +303,33 @@ namespace KriptonApi.Migrations
                     b.HasKey("IdTipoTransaccion");
 
                     b.ToTable("TipoTransaccion");
+
+                    b.HasData(
+                        new
+                        {
+                            IdTipoTransaccion = 1,
+                            Descr = "Tranferencia"
+                        },
+                        new
+                        {
+                            IdTipoTransaccion = 2,
+                            Descr = "CompraCripto"
+                        },
+                        new
+                        {
+                            IdTipoTransaccion = 3,
+                            Descr = "Deposito"
+                        });
                 });
 
             modelBuilder.Entity("KriptonApi.Entities.Transaccion", b =>
                 {
-                    b.Property<int>("IdTransacciones")
+                    b.Property<int>("IdTransaccion")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("IdTransacciones");
+                        .HasColumnName("IdTransaccion");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTransacciones"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTransaccion"));
 
                     b.Property<DateTime>("FechaTransaccion")
                         .HasColumnType("Date")
@@ -218,7 +351,7 @@ namespace KriptonApi.Migrations
                         .HasColumnType("decimal")
                         .HasColumnName("Monto");
 
-                    b.HasKey("IdTransacciones");
+                    b.HasKey("IdTransaccion");
 
                     b.HasIndex("IdCuentaDestino");
 
@@ -227,6 +360,35 @@ namespace KriptonApi.Migrations
                     b.HasIndex("IdTipoTransaccion");
 
                     b.ToTable("Transaccion");
+
+                    b.HasData(
+                        new
+                        {
+                            IdTransaccion = 1,
+                            FechaTransaccion = new DateTime(2023, 10, 23, 1, 58, 30, 633, DateTimeKind.Local).AddTicks(6457),
+                            IdCuentaDestino = 2,
+                            IdCuentaOrigen = 1,
+                            IdTipoTransaccion = 3,
+                            Monto = 10000m
+                        },
+                        new
+                        {
+                            IdTransaccion = 2,
+                            FechaTransaccion = new DateTime(2023, 10, 23, 1, 58, 30, 633, DateTimeKind.Local).AddTicks(6473),
+                            IdCuentaDestino = 3,
+                            IdCuentaOrigen = 2,
+                            IdTipoTransaccion = 1,
+                            Monto = 20000m
+                        },
+                        new
+                        {
+                            IdTransaccion = 3,
+                            FechaTransaccion = new DateTime(2023, 10, 23, 1, 58, 30, 633, DateTimeKind.Local).AddTicks(6475),
+                            IdCuentaDestino = 1,
+                            IdCuentaOrigen = 3,
+                            IdTipoTransaccion = 2,
+                            Monto = 30000m
+                        });
                 });
 
             modelBuilder.Entity("KriptonApi.Entities.Usuario", b =>
@@ -303,31 +465,15 @@ namespace KriptonApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("KriptonApi.Entities.Conversion", b =>
+            modelBuilder.Entity("KriptonApi.Entities.Cotizacion", b =>
                 {
-                    b.HasOne("KriptonApi.Entities.Cuenta", "CuentaDestino")
+                    b.HasOne("KriptonApi.Entities.Moneda", "Moneda")
                         .WithMany()
-                        .HasForeignKey("IdCuentaDestino")
+                        .HasForeignKey("IdMoneda")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KriptonApi.Entities.Cuenta", "CuentaOrigen")
-                        .WithMany()
-                        .HasForeignKey("IdCuentaOrigen")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KriptonApi.Entities.TipoConversion", "TipoConversion")
-                        .WithMany()
-                        .HasForeignKey("IdTipoConversion")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CuentaDestino");
-
-                    b.Navigation("CuentaOrigen");
-
-                    b.Navigation("TipoConversion");
+                    b.Navigation("Moneda");
                 });
 
             modelBuilder.Entity("KriptonApi.Entities.Cuenta", b =>
@@ -338,7 +484,15 @@ namespace KriptonApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("KriptonApi.Entities.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("IdUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("TipoCuenta");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("KriptonApi.Entities.Transaccion", b =>
