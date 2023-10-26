@@ -18,17 +18,21 @@ namespace KriptonApi.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        ///  Devuelve todo los usuarios
+        /// </summary>
+        /// <returns>retorna todos los usuarios</returns>
+
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Usuario>>> GetAll()
         {
             var usuarios = await _unitOfWork.UsuarioRepository.GetAll();
 
             return usuarios;
         }
+
         [HttpGet("{idUsuario}")]
-        [AllowAnonymous]
         public async Task<ActionResult<Usuario>> GetUsuarioById(int idUsuario)
         {
             var usuario = await _unitOfWork.UsuarioRepository.GetById(idUsuario);
@@ -39,6 +43,11 @@ namespace KriptonApi.Controllers
             return Ok (usuario);
         }
 
+        /// <summary>
+        ///  Registra el usuario
+        /// </summary>
+        /// <returns>devuelve un usuario registrado con un statusCode 201</returns>
+
         [HttpPost]
         [Route("Rergister")]
         public async Task<IActionResult> Register(RegisterDto dto)
@@ -47,6 +56,13 @@ namespace KriptonApi.Controllers
             await _unitOfWork.complete();
             return Ok(true);
         }
+
+        /// <summary>
+        ///  Actualiza el usuario
+        /// </summary>
+        /// <returns>actualizado o un 500</returns>
+
+
         [HttpPut("{idUsuario}")]
         public async Task<IActionResult> Update([FromRoute] int IdUsuario, RegisterDto dto)
         {
@@ -54,6 +70,12 @@ namespace KriptonApi.Controllers
             if (result) await _unitOfWork.complete();
             return Ok(result);
         }
+        /// <summary>
+        ///  Elimina el usuario
+        /// </summary>
+        /// <returns>Eliminado o un 500</returns>
+
+
         [HttpDelete("{idUsuario}")]
 
         public async Task<IActionResult> Delete([FromRoute] int idUsuario)

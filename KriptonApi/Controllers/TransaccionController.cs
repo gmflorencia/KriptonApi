@@ -17,6 +17,10 @@ namespace KriptonApi.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+        /// <summary>
+        ///  realiza una transaccion, puede ser tranferencia, o deposito
+        /// </summary>
+        /// <returns>Eliminado o un 500</returns>
 
         [HttpPost]
         [Route("transaccion")]
@@ -31,6 +35,11 @@ namespace KriptonApi.Controllers
             return Ok(transferencia);
 
         }
+
+        /// <summary>
+        ///  Devuelve todos los movimientos de una cuenta por id
+        /// </summary>
+        /// <returns>retorna un 200</returns>
 
         [HttpGet]
         [Route("movimientos/{idCuenta}")]

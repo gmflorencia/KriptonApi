@@ -8,7 +8,7 @@ namespace KriptonApi.Controllers
 {
     [Route("api/cuenta")]
     [ApiController]
-   // [Authorize]
+    [Authorize]
     public class CuentaController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -16,8 +16,14 @@ namespace KriptonApi.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+        /// <summary>
+        ///  Devuelve el detalle de una cuenta por id
+        /// </summary>
+        /// <returns>retorna un 200</returns>
+
+
         [HttpGet("{idCuenta}")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<Cuenta>> GetCuentaById(int idCuenta)
         {
             var cuenta = await _unitOfWork.CuentaRepository.GetById(idCuenta);
@@ -28,6 +34,12 @@ namespace KriptonApi.Controllers
             return Ok(cuenta);
 
         }
+        /// <summary>
+        ///  Actualiza la cuenta, alias y saldo
+        /// </summary>
+        /// <returns> actualizada o un 500</returns>
+
+
         [HttpPut("{idCuenta}")]
         public async Task<IActionResult> Update([FromRoute] int idCuenta, CuentaDto dto)
         {

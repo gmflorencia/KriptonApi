@@ -3,6 +3,7 @@ using KriptonApi.Entities;
 using KriptonApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace KriptonApi.Controllers
 {
@@ -15,8 +16,14 @@ namespace KriptonApi.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+        /// <summary>
+        ///  devuelve todos los detalles de las criptos
+        /// </summary>
+        /// <returns>retorna un 200</returns>
+
+
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<Criptomoneda>> GetAll()
         {
             var criptos = await _unitOfWork.CriptomonedaRepository.GetAll();
@@ -27,6 +34,10 @@ namespace KriptonApi.Controllers
             return Ok(criptos);
 
         }
+        /// <summary>
+        ///  Devuelve los datos de una cripto segun su descripcion
+        /// </summary>
+        /// <returns>retorna un 200</returns>
 
         [HttpGet]
         [Route("cripto/{cripto}")]
@@ -40,6 +51,11 @@ namespace KriptonApi.Controllers
             }
             return NotFound();
         }
+        /// <summary>
+        ///  Actualiza la tasa de conversion de una cripto por id
+        /// </summary>
+        /// <returns>retorna un 200</returns>
+
         [HttpPut("{idCripto}")]
         public async Task<IActionResult> Update([FromRoute] int idCripto, CriptoDto dto)
         {
@@ -48,5 +64,30 @@ namespace KriptonApi.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        ///  realiza la compra de cripto
+        /// </summary>
+        /// <returns>retorna un 200</returns>
+        [HttpPost]
+        [Route("Compra")]
+        public async Task<IActionResult> Compra(CompraCriptoDto dto)
+        {
+            var result = await _unitOfWork.CriptomonedaRepository.Compra(dto);
+
+            var updateCuentaDestino = _unitOfWork.CuentaRepository.Update(new Cuenta
+            {
+                IdCuenta = dto.IdCuentaDestino,
+                Saldo = _unitOfWork.CriptomonedaRepository.saldoDestino
+            });
+            await _unitOfWork.complete(); 
+
+            var updateCuentaOrigen = _unitOfWork.CuentaRepository.Update(new Cuenta
+            {
+                IdCuenta = dto.IdCuentaOrigen,
+                Saldo = _unitOfWork.CriptomonedaRepository.saldoOrigen,
+            });
+            await _unitOfWork.complete();
+            return Ok(result);
+        }
     }
 }
