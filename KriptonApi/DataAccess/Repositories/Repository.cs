@@ -1,4 +1,5 @@
 ﻿using KriptonApi.DataAccess.Repositories.Interfaces;
+using KriptonApi.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace KriptonApi.DataAccess.Repositories
@@ -30,6 +31,11 @@ namespace KriptonApi.DataAccess.Repositories
         {
             throw new NotImplementedException();
         }
+        public virtual Task<bool> Compra(CompraCriptoDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual Task<bool> Delete(int id)
         {
             throw new NotImplementedException();

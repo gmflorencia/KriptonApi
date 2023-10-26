@@ -14,7 +14,7 @@ namespace KriptonApi.DataAccess.Repositories
         {
             var cuenta = await _context.Cuenta.FirstOrDefaultAsync(x => x.IdCuenta == updateCuenta.IdCuenta);
             if (cuenta == null) { return false; }
-            cuenta.Alias = updateCuenta.Alias;
+            if (updateCuenta.Alias != null) { cuenta.Alias = updateCuenta.Alias; }
             cuenta.Saldo = updateCuenta.Saldo;
 
             _context.Cuenta.Update(cuenta);
