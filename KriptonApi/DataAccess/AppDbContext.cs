@@ -12,14 +12,14 @@ namespace KriptonApi.DataAccess
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
-        public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Cuenta> Cuentas { get; set; }
-        public DbSet<TipoCuenta> TipoCuentas { get; set; }
-        public DbSet<Transaccion> Transacciones { get; set; }
-        public DbSet<TipoTransaccion> TipoTransaccions { get; set; }
-        public DbSet<Conversion> Conversions { get; set; }
-        public DbSet<TipoConversion> TipoConversions { get; set; }
-        public DbSet<Criptomoneda> Criptomonedas { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Cuenta> Cuenta { get; set; }
+        public DbSet<TipoCuenta> TipoCuenta { get; set; }
+        public DbSet<Transaccion> Transaccion { get; set; }
+        public DbSet<TipoTransaccion> TipoTransaccion { get; set; }
+        public DbSet<Conversion> Conversion { get; set; }
+        public DbSet<TipoConversion> TipoConversion { get; set; }
+        public DbSet<Criptomoneda> Criptomoneda { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

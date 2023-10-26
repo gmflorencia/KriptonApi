@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
 namespace KriptonApi.Entities
@@ -9,21 +8,33 @@ namespace KriptonApi.Entities
         [Key]
         [Column("IdConversion", TypeName = "int")]
         public int IdConversion { get; set; }
+
         [Required]
-        [ForeignKey("Cuentas")]
+        [Column("IdCuentaOrigen", TypeName = "int")]
         public int IdCuentaOrigen { get; set; }
+
         [Required]
-        [ForeignKey("Cuentas")]
+        [Column("IdCuentaDestino", TypeName = "int")]
         public int IdCuentaDestino { get; set; }
+
         [Required]
         [Column("MontoConvertido", TypeName = "decimal")]
         public double MontoConvertido { get; set; }
         [Required]
         [Column("FechaConversion", TypeName = "Date")]
         public DateTime FechaConversion { get; set; }
+
         [Required]
-        [ForeignKey("TipoConversion")]
+        [Column("IdTipoConversion", TypeName = "int")]
         public int IdTipoConversion { get; set; }
+        [ForeignKey("IdTipoConversion")]
+        public TipoConversion TipoConversion  { get; set; }
+
+        [ForeignKey("IdCuentaOrigen")]
+        public Cuenta CuentaOrigen { get; set; }
+
+        [ForeignKey("IdCuentaDestino")]
+        public Cuenta CuentaDestino { get; set; }
 
     }
 }
