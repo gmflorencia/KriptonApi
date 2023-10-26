@@ -20,6 +20,7 @@ namespace KriptonApi.Entities
         {
             IdUsuario = idUsuario;
             Nombre = registerDto.Nombre;
+            Apellido=registerDto.Apellido;
             Dni = registerDto.Dni;
             Email = registerDto.Email;
             Clave = ClaveEncryptHelper.EncryptClave(registerDto.Clave, registerDto.Email);

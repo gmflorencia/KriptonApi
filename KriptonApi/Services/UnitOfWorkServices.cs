@@ -10,6 +10,7 @@ namespace KriptonApi.Services
         public UsuarioRepository UsuarioRepository { get; set; }
         public CriptomonedaRepository CriptomonedaRepository { get; set; }
         public CuentaRepository CuentaRepository { get; set; }
+        public CotizacionRepository CotizacionRepository { get; set; }
         public TransaccionRepository TransaccionRepository { get; set; }
         public UnitOfWorkServices(AppDbContext context)
         {
@@ -17,6 +18,7 @@ namespace KriptonApi.Services
             UsuarioRepository = new UsuarioRepository(_context);
             CriptomonedaRepository = new CriptomonedaRepository(_context);
             CuentaRepository = new CuentaRepository(_context);
+            CotizacionRepository = new CotizacionRepository(_context);
             TransaccionRepository = new TransaccionRepository(_context);
         }
         public Task<int> complete()

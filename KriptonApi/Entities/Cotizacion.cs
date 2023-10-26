@@ -7,6 +7,17 @@ namespace KriptonApi.Entities
 {
     public class Cotizacion
     {
+        public Cotizacion()
+        {
+
+        }
+        public Cotizacion(CotizacionDto cotizacionDto, int idCotizacion)
+        {
+            IdCotizacion = idCotizacion;             
+            Compra = cotizacionDto.Compra;
+            Venta = cotizacionDto.Venta;
+        }
+
         [Key]
         [Column("IdCotizacion", TypeName = "int")]
         public int IdCotizacion { get; set; }
